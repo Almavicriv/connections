@@ -189,11 +189,24 @@ input[type="text"]:focus { outline: 2px solid var(--selected); border-color: tra
 }
 
 .message {
-  text-align: center;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 10;
+  margin: 0;
+  padding: 10px 22px;
+  border-radius: 8px;
+  background: var(--text);
+  color: #fff;
   font-weight: 700;
-  min-height: 1.5em;
-  margin: 14px 0 0;
+  font-size: 1.1rem;
+  direction: ltr;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s;
 }
+.message.show { opacity: 1; }
 
 .win { text-align: center; margin-top: 20px; }
 .win-text { font-size: 1.3rem; font-weight: 700; }

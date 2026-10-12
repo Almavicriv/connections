@@ -258,7 +258,7 @@ function startGame(id) {
   };
 
   $('game-title').textContent = board.name;
-  $('message').textContent = '';
+  hideMessage();
   $('win').classList.add('hidden');
   $('game-actions').classList.remove('hidden');
   renderGame();
@@ -308,7 +308,7 @@ function toggleTile(word) {
   } else if (game.selected.size < 4) {
     game.selected.add(word);
   }
-  $('message').textContent = '';
+  hideMessage();
   renderGame();
 }
 
@@ -325,7 +325,7 @@ function submitGuess() {
     game.solved.push(level);
     game.remaining = game.remaining.filter((t) => t.level !== level);
     game.selected.clear();
-    $('message').textContent = '';
+    hideMessage();
     renderGame();
     if (game.remaining.length === 0) {
       endGame('כל הכבוד! מצאתם את כל הקשרים 🎉');
@@ -335,7 +335,7 @@ function submitGuess() {
 
   playErrorSound();
   game.triesLeft--;
-  $('message').textContent = max === 3 ? '3/4' : 'לא נכון';
+  showMessage(max === 3 ? '3/4' : 'לא נכון');
 
   if (game.triesLeft === 0) {
     // חושפים את הקבוצות שלא נפתרו
@@ -343,12 +343,27 @@ function submitGuess() {
     game.solved.push(...levels);
     game.remaining = [];
     game.selected.clear();
-    $('message').textContent = '';
+    hideMessage();
     renderGame();
     endGame('נגמרו הניסיונות 😕');
   } else {
     renderGame();
   }
+}
+
+let messageTimer = null;
+
+function showMessage(text) {
+  const el = $('message');
+  el.textContent = text;
+  el.classList.add('show');
+  clearTimeout(messageTimer);
+  messageTimer = setTimeout(hideMessage, 1000);
+}
+
+function hideMessage() {
+  clearTimeout(messageTimer);
+  $('message').classList.remove('show');
 }
 
 function endGame(text) {
@@ -385,7 +400,7 @@ function useHint() {
   const words = game.remaining.filter((t) => t.level === hardest).slice(0, 2);
   game.selected = new Set(words.map((t) => t.word));
   game.hintUsed = true;
-  $('message').textContent = '';
+  hideMessage();
   renderGame();
 }
 
