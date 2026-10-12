@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>מה הקשר?</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main class="container">
+
+    <!-- רשימת לוחות -->
+    <section id="view-list" class="view">
+      <h1>מה הקשר?</h1>
+      <button id="btn-add" class="btn btn-primary">+ הוספת לוח</button>
+      <ul id="board-list" class="board-list"></ul>
+      <p id="empty-msg" class="muted">עדיין אין לוחות. צרו את הראשון!</p>
+      <button id="btn-publish" class="btn btn-small export">פרסום</button>
+    </section>
+
+    <!-- יצירה / עריכה -->
+    <section id="view-edit" class="view hidden">
+      <h2 id="edit-title">לוח חדש</h2>
+      <form id="board-form">
+        <label class="field">
+          <span>שם הלוח</span>
+          <input type="text" id="board-name" placeholder="למשל: לוח 1">
+        </label>
+        <div id="groups-fields"></div>
+        <p id="form-error" class="error"></p>
+        <div class="actions">
+          <button type="submit" class="btn btn-primary">שמירה</button>
+          <button type="button" id="btn-cancel" class="btn">ביטול</button>
+        </div>
+      </form>
+    </section>
+
+    <!-- משחק -->
+    <section id="view-game" class="view hidden">
+      <div class="game-header">
+        <button id="btn-back" class="btn btn-small">→ חזרה</button>
+        <h2 id="game-title"></h2>
+      </div>
+      <div id="solved"></div>
+      <div id="grid" class="grid"></div>
+      <p id="tries" class="tries"></p>
+      <p id="message" class="message"></p>
+      <div id="game-actions" class="actions center">
+        <button id="btn-hint" class="btn">רמז</button>
+        <button id="btn-submit" class="btn btn-primary" disabled>אישור</button>
+      </div>
+      <div id="win" class="win hidden">
+        <p id="win-text" class="win-text"></p>
+        <button id="btn-win-back" class="btn btn-primary">חזרה לרשימת הלוחות</button>
+      </div>
+    </section>
+
+  </main>
+  <script src="boards.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
