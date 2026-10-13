@@ -202,6 +202,7 @@ input[type="text"]:focus { outline: 2px solid var(--selected); border-color: tra
   font-weight: 700;
   font-size: 1.1rem;
   direction: ltr;
+  white-space: nowrap;
   opacity: 0;
   pointer-events: none;
   transition: opacity 0.2s;

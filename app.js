@@ -255,6 +255,7 @@ function startGame(id) {
     selected: new Set(), // מילים שנבחרו
     hintUsed: false,
     triesLeft: MAX_TRIES,
+    pastGuesses: new Set(), // ניחושים שגויים שכבר נוסו
   };
 
   $('game-title').textContent = board.name;
@@ -299,7 +300,7 @@ function renderGame() {
   $('tries').classList.toggle('hidden', game.remaining.length === 0);
 
   $('btn-submit').disabled = game.selected.size !== 4;
-  $('btn-hint').disabled = game.hintUsed;
+  $('btn-hint').disabled = !hintAvailable();
 }
 
 function toggleTile(word) {
@@ -332,6 +333,13 @@ function submitGuess() {
     }
     return;
   }
+
+  const key = [...game.selected].sort().join('|');
+  if (game.pastGuesses.has(key)) {
+    showMessage('את זה כבר ניסית');
+    return;
+  }
+  game.pastGuesses.add(key);
 
   playErrorSound();
   game.triesLeft--;
@@ -394,8 +402,13 @@ function playErrorSound() {
   }
 }
 
+// הרמז זמין פעם אחת בלבד, וכל עוד הקבוצה הקשה עוד לא נפתרה
+function hintAvailable() {
+  return !game.hintUsed && !game.solved.includes(LEVELS.length - 1);
+}
+
 function useHint() {
-  if (game.hintUsed) return;
+  if (!hintAvailable()) return;
   const hardest = Math.max(...game.remaining.map((t) => t.level));
   const words = game.remaining.filter((t) => t.level === hardest).slice(0, 2);
   game.selected = new Set(words.map((t) => t.word));
