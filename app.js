@@ -2,6 +2,7 @@ const STORAGE_KEY = 'connections-boards';
 const DELETED_KEY = 'connections-deleted';
 const LEVELS = ['קל מאוד', 'קל', 'בינוני', 'קשה'];
 const MAX_TRIES = 5;
+const DIFFICULTIES = { easy: 'קל', medium: 'בינוני', hard: 'קשה' };
 
 const $ = (id) => document.getElementById(id);
 
@@ -131,6 +132,12 @@ function renderList() {
     const name = document.createElement('button');
     name.className = 'board-name';
     name.textContent = board.name;
+    if (DIFFICULTIES[board.difficulty]) {
+      const level = document.createElement('span');
+      level.className = `board-level ${board.difficulty}`;
+      level.textContent = DIFFICULTIES[board.difficulty];
+      name.append(' ', level);
+    }
     name.onclick = () => startGame(board.id);
 
     const date = document.createElement('div');
@@ -193,6 +200,7 @@ function openEditor(id = null) {
   const board = id ? loadBoards().find((b) => b.id === id) : null;
   $('edit-title').textContent = board ? 'עריכת לוח' : 'לוח חדש';
   $('board-name').value = board ? board.name : '';
+  $('board-difficulty').value = (board && board.difficulty) || '';
 
   if (board) {
     board.groups.forEach((g, i) => {
@@ -227,14 +235,16 @@ function handleSave(e) {
 
   const boards = loadBoards();
   const name = $('board-name').value.trim();
+  const difficulty = $('board-difficulty').value;
 
   if (editingId) {
     const board = boards.find((b) => b.id === editingId);
-    saveBoard({ ...board, name: name || board.name, groups });
+    saveBoard({ ...board, name: name || board.name, difficulty, groups });
   } else {
     saveBoard({
       id: Date.now().toString(),
       name: name || `לוח ${boards.length + 1}`,
+      difficulty,
       groups,
     });
   }
