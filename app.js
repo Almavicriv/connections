@@ -136,7 +136,7 @@ function renderList() {
       const level = document.createElement('span');
       level.className = `board-level ${board.difficulty}`;
       level.textContent = DIFFICULTIES[board.difficulty];
-      name.append(' ', level);
+      name.append(' - ', level);
     }
     name.onclick = () => startGame(board.id);
 
