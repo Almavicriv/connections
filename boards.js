@@ -91,7 +91,7 @@ window.SHARED_BOARDS = [
     "name": "הלוח של רעות ועלמה",
     "groups": [
       {
-        "connection": "צירופים בחיבור המילה \"שם\"",
+        "connection": "שם __",
         "words": [
           "תואר",
           "במה",
