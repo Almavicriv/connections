@@ -63,6 +63,20 @@ h2 { font-size: 1.4rem; margin: 0 0 16px; }
 
 #btn-add { display: block; margin: 0 auto 20px; }
 .export { display: block; margin: 24px auto 0; }
+/* מסך הרשימה ממלא את גובה המסך, כדי שהטקסט התחתון יישב בקצה */
+#view-list {
+  display: flex;
+  flex-direction: column;
+  min-height: calc(100vh - 72px);
+  min-height: calc(100dvh - 72px);
+}
+.footer {
+  margin: auto 0 -36px;
+  padding-top: 40px;
+  text-align: center;
+  font-size: 0.8rem;
+  color: var(--muted);
+}
 
 .actions { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 16px; }
 .actions.center { justify-content: center; }
@@ -221,6 +235,8 @@ input[type="text"]:focus, select:focus { outline: 2px solid var(--selected); bor
 
 @media (max-width: 480px) {
   .container { padding: 16px 12px 40px; }
+  #view-list { min-height: calc(100vh - 56px); min-height: calc(100dvh - 56px); }
+  .footer { margin-bottom: -30px; }
   h1 { font-size: 1.7rem; }
   .grid { gap: 6px; }
   .tile { min-height: 64px; aspect-ratio: 1 / 1; font-size: clamp(0.75rem, 3.8vw, 1rem); }
