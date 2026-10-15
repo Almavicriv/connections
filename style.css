@@ -79,8 +79,11 @@ h2 { font-size: 1.4rem; margin: 0 0 16px; }
   border: 1px solid var(--border);
   border-radius: 10px;
 }
+.board-info { flex: 1; min-width: 0; }
+.board-date { font-size: 0.8rem; color: var(--muted); }
 .board-name {
-  flex: 1;
+  display: block;
+  width: 100%;
   font-size: 1.1rem;
   font-weight: 600;
   background: none;
@@ -218,7 +221,7 @@ input[type="text"]:focus { outline: 2px solid var(--selected); border-color: tra
   .grid { gap: 6px; }
   .tile { min-height: 64px; aspect-ratio: 1 / 1; font-size: clamp(0.75rem, 3.8vw, 1rem); }
   .board-item { flex-wrap: wrap; }
-  .board-name { flex-basis: 100%; }
+  .board-info { flex-basis: 100%; }
   .actions.center .btn { flex: 1; }
   .btn { padding: 12px 18px; }
   .btn-small { padding: 8px 14px; }

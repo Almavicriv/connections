@@ -112,8 +112,13 @@ function showView(name) {
 
 // ---------- רשימת לוחות ----------
 
+// ה־id של לוח הוא זמן היצירה שלו (Date.now)
+function boardDate(board) {
+  return new Date(Number(board.id)).toLocaleDateString('he-IL');
+}
+
 function renderList() {
-  const boards = loadBoards();
+  const boards = loadBoards().sort((a, b) => Number(b.id) - Number(a.id)); // החדש ביותר למעלה
   const list = $('board-list');
   list.innerHTML = '';
   $('empty-msg').classList.toggle('hidden', boards.length > 0);
@@ -127,6 +132,14 @@ function renderList() {
     name.className = 'board-name';
     name.textContent = board.name;
     name.onclick = () => startGame(board.id);
+
+    const date = document.createElement('div');
+    date.className = 'board-date';
+    date.textContent = boardDate(board);
+
+    const info = document.createElement('div');
+    info.className = 'board-info';
+    info.append(name, date);
 
     const edit = document.createElement('button');
     edit.className = 'btn btn-small';
@@ -143,7 +156,7 @@ function renderList() {
       }
     };
 
-    li.append(name, edit, del);
+    li.append(info, edit, del);
     list.appendChild(li);
   });
 
